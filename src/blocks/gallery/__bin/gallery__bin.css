@@ -1,0 +1,14 @@
+.gallery__bin {
+  width: 18px;
+  height: 19px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background: url(../../../images/bin.svg) center no-repeat;
+}
+
+.gallery__bin:hover {
+  opacity: .6;
+  cursor: pointer;
+}

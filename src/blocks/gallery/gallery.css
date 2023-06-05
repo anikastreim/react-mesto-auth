@@ -1,0 +1,11 @@
+.gallery {
+  max-width: 282px;
+  width: 100%;
+  height: 361px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 10px;
+}
