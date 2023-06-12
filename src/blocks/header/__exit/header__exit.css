@@ -1,0 +1,16 @@
+.header__exit {
+  color: #a9a9a9;
+  border: none;
+  background: none;
+  font-size: 18px;
+  line-height: 1.22;
+  font-weight: 400;
+  transition: opacity .2s;
+  margin: 0;
+  padding: 0;
+}
+
+.header__exit:hover {
+  opacity: .6;
+  cursor: pointer;
+}

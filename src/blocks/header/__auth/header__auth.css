@@ -1,0 +1,16 @@
+.header__auth {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.22;
+  font-weight: 400;
+  transition: opacity .2;
+  text-decoration: none;
+  align-self: center;
+}
+
+.header__auth:hover {
+  cursor: pointer;
+  opacity: .6;
+}
