@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <div className="footer">
+    <footer className="footer">
       <p className="footer__copyright">&copy; 2023 Mesto Russia</p>
-    </div>
+    </footer>
   );
 }
 

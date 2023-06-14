@@ -6,7 +6,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike,
   const currentUser = useContext(CurrentUserContext);
 
   return (
-    <div className="content">
+    <main className="content">
       <section className="profile">
         <div className="profile__card">
           <button onClick={onEditAvatar} type="button" aria-label="edit profile image" className="profile__button">
@@ -25,7 +25,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike,
           <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
         ))}
       </section>
-    </div>
+    </main>
   );
 }
 

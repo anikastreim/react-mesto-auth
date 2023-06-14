@@ -189,7 +189,7 @@ function App() {
         <Header onSignOut={onSignOut} userEmail={userEmail} />
         <Routes>
           <Route path="/" element={<ProtectedRoute element={Main} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} loggedIn={loggedIn} cards={cards}/>} />
-          <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/sign-in" element={<Login loggedIn={loggedIn} handleLogin={handleLogin} />} />
           <Route path="/sign-up" element={<Register handleRegister={handleRegister} />} />
           <Route path="*" element={<Navigate to={loggedIn ? "/" : "/sign-in"}/>} />
         </Routes>
