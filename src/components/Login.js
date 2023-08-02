@@ -1,19 +1,10 @@
-import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
-function Login({handleLogin, loggedIn}) {
+function Login({handleLogin}) {
   const [formValue, setFormValue] = useState({
     email: "",
     password: ""
   })
-  
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate("/");
-    }
-  }, [loggedIn]);
 
   function handleChange(e) {
     const {name, value} = e.target;
@@ -26,7 +17,7 @@ function Login({handleLogin, loggedIn}) {
 
   function onLogin(e) {
     e.preventDefault();
-    handleLogin(formValue.password, formValue.email);
+    handleLogin(formValue.email, formValue.password);
   };
 
   return (

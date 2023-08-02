@@ -18,7 +18,7 @@ function Register({handleRegister}) {
 
   function onRegister(e) {
     e.preventDefault();
-    handleRegister(formValue.password, formValue.email);
+    handleRegister(formValue.email, formValue.password);
   };
 
   return (

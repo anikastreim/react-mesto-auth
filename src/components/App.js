@@ -25,25 +25,36 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const [email, setUserEmail] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     handleTokenCheck();
-
-    Promise.all([
-      api.getInitialUserInfo(),
-      api.getInitialCards()
-    ])
-    .then(([data, cards]) => {
-      setCurrentUser(data);
-      setCards(cards);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn, navigate]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      Promise.all([
+        api.getInitialUserInfo(),
+        api.getInitialCards()
+      ])
+      .then(([data, cards]) => {
+        setCurrentUser(data);
+        setCards(cards.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [loggedIn]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -74,7 +85,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     api
     .changeLikeCardStatus(card._id, !isLiked)
     .then((newCard) => {
@@ -130,14 +141,14 @@ function App() {
     setSelectedCard(null);
   }
 
-  function handleLogin(password, email) {
-    accAuth.login(password, email)
+  function handleLogin(email, password) {
+    accAuth.login(email, password)
     .then((data) => {
       if (data.token) {
         localStorage.setItem("jwt", data.token);
+        setUserEmail(email);
         setLoggedIn(true);
-        handleTokenCheck();
-        navigate("/");
+        navigate("/", { replace: true });
       }
     })
     .catch((err) => {
@@ -145,11 +156,11 @@ function App() {
     });
   }
 
-  function handleRegister(password, email) {
-    accAuth.register(password, email)
+  function handleRegister(email, password) {
+    accAuth.register(email, password)
     .then(() => {
       setIsSuccess(true);
-      navigate("/sign-in");
+      navigate("/sign-in", { replace: true });
     })
     .catch((err) => {
       setIsSuccess(false);
@@ -162,12 +173,12 @@ function App() {
 
   function handleTokenCheck() {
     const jwt = localStorage.getItem("jwt");
-
     if (jwt) {
       accAuth.checkToken(jwt)
       .then((user) => {
-        setUserEmail(user.data.email);
+        setUserEmail(user.email);
         setLoggedIn(true);
+        navigate("/", { replace: true });
       })
       .catch((err) => {
         console.log(err);
@@ -186,7 +197,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header onSignOut={onSignOut} userEmail={userEmail} />
+        <Header onSignOut={onSignOut} userEmail={email} />
         <Routes>
           <Route path="/" element={<ProtectedRoute element={Main} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} loggedIn={loggedIn} cards={cards}/>} />
           <Route path="/sign-in" element={<Login loggedIn={loggedIn} handleLogin={handleLogin} />} />
